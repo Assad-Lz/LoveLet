@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dia dos Namorados</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Roboto:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #ffe6e6;
+        color: #333;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      header {
+        text-align: center;
+        padding: 30px 0;
+      }
+
+      h1 {
+        font-family: "Dancing Script", cursive;
+        font-size: 3rem;
+        color: #d81b60;
+        margin-bottom: 20px;
+      }
+
+      /* Carrossel */
+      .carousel-container {
+        position: relative;
+        max-width: 800px;
+        margin: 0 auto 40px;
+        overflow: hidden;
+        border-radius: 15px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .carousel {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+        height: 600px;
+      }
+
+      .carousel img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        flex-shrink: 0;
+      }
+
+      .carousel-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(216, 27, 96, 0.7);
+        color: white;
+        border: none;
+        padding: 15px;
+        cursor: pointer;
+        border-radius: 50%;
+        font-size: 1.5rem;
+        z-index: 10;
+        transition: all 0.3s;
+      }
+
+      .carousel-btn:hover {
+        background-color: rgba(216, 27, 96, 1);
+      }
+
+      #prevBtn {
+        left: 20px;
+      }
+
+      #nextBtn {
+        right: 20px;
+      }
+
+      .carousel-indicators {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+      }
+
+      .indicator {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: #ccc;
+        margin: 0 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .indicator.active {
+        background-color: #d81b60;
+      }
+
+      /* Declaração */
+      .declaration {
+        background-color: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        margin-bottom: 40px;
+        text-align: center;
+      }
+
+      .declaration h2 {
+        font-family: "Dancing Script", cursive;
+        font-size: 2.5rem;
+        color: #d81b60;
+        margin-bottom: 20px;
+      }
+
+      .declaration p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
+
+      /* Corações */
+      .heart {
+        position: absolute;
+        pointer-events: none;
+        opacity: 0;
+        z-index: 100;
+      }
+
+      /* Contador de Tempo Juntos */
+      .time-together {
+        background-color: #d81b60;
+        color: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        margin-bottom: 40px;
+        text-align: center;
+      }
+
+      .time-together h2 {
+        font-family: "Dancing Script", cursive;
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+      }
+
+      .time-together p {
+        padding: 15px;
+      }
+
+      .time-counter {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+
+      .time-unit {
+        background-color: rgba(255, 255, 255, 0.2);
+        padding: 15px;
+        border-radius: 10px;
+        min-width: 100px;
+      }
+
+      .time-number {
+        font-size: 2.5rem;
+        font-weight: bold;
+      }
+
+      .time-label {
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      footer {
+        text-align: center;
+        padding: 20px;
+        color: #d81b60;
+        font-weight: bold;
+      }
+
+      /* Responsividade */
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 2.5rem;
+        }
+
+        .carousel-container {
+          height: 500px;
+        }
+
+        .carousel {
+          height: 300px;
+        }
+
+        .carousel img {
+          height: 500px;
+        }
+
+        .carousel-btn {
+          padding: 10px;
+          font-size: 1.2rem;
+        }
+
+        .declaration h2,
+        .time-together h2 {
+          font-size: 2rem;
+        }
+
+        .time-unit {
+          min-width: 80px;
+          padding: 10px;
+        }
+
+        .time-number {
+          font-size: 2rem;
+        }
+
+        .declaration p {
+          font-size: 1rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        h1 {
+          font-size: 2rem;
+          margin-bottom: 10px;
+          padding: 0 10px;
+          line-height: 1.2;
+          word-wrap: break-word;
+          overflow-wrap: break-word;
+          hyphens: auto;
+          -webkit-hyphens: auto;
+          -moz-hyphens: auto;
+          -ms-hyphens: auto;
+        }
+
+        .carousel-container {
+          height: 250px;
+        }
+
+        .carousel {
+          height: 250px;
+        }
+
+        .declaration,
+        .time-together {
+          padding: 20px 15px;
+        }
+
+        .declaration h2,
+        .time-together h2 {
+          font-size: 1.8rem;
+        }
+
+        .time-counter {
+          gap: 10px;
+        }
+
+        .time-unit {
+          min-width: 70px;
+          padding: 8px;
+        }
+
+        .time-number {
+          font-size: 1.5rem;
+        }
+
+        .time-label {
+          font-size: 0.8rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Feliz Dia dos Namorados, Meu Amor!</h1>
+      </header>
+
+      <div class="carousel-container">
+        <div class="carousel">
+          <img src="global/Imagem_1.jpg" alt="Foto de casal 1" />
+          <img src="global/Imagem_2.jpg" alt="Foto romântica" />
+          <img src="global/Imagem_3.jpg" alt="Foto de beijo" />
+          <img src="global/Imagem_4.jpg" alt="Dia dos namorados" />
+          <img src="global/Imagem_7.jpg" alt="Coração" />
+        </div>
+        <button class="carousel-btn" id="prevBtn">❮</button>
+        <button class="carousel-btn" id="nextBtn">❯</button>
+        <div class="carousel-indicators"></div>
+      </div>
+
+      <div class="declaration">
+        <h2>Para você, meu amor</h2>
+        <p>
+          No dia mais romântico do ano, quero te dizer que você é a pessoa mais
+          especial da minha vida. Cada momento ao seu lado é um presente que eu
+          guardo com carinho no meu coração.
+        </p>
+        <p>
+          Seu sorriso ilumina meus dias, seu abraço é meu porto seguro, e seu
+          amor é o maior presente que eu poderia receber. Hoje e sempre, quero
+          estar ao seu lado, compartilhando sonhos, conquistas e todo o amor que
+          cabe em nossos corações.
+        </p>
+        <p>
+          Feliz Dia dos Namorados, meu amor! Que nossa história continue sendo
+          escrita com muitas risadas, cumplicidade e amor infinito.
+        </p>
+        <p>Com todo meu amor,</p>
+        <p>❤️</p>
+      </div>
+      <div class="time-together">
+        <h2>Nosso Tempo Juntos</h2>
+        <p>Desde o dia que te pedi em namoro:</p>
+        <div class="time-counter">
+          <div class="time-unit">
+            <div class="time-number" id="years">0</div>
+            <div class="time-label">Anos</div>
+          </div>
+          <div class="time-unit">
+            <div class="time-number" id="months">0</div>
+            <div class="time-label">Meses</div>
+          </div>
+          <div class="time-unit">
+            <div class="time-number" id="days">0</div>
+            <div class="time-label">Dias</div>
+          </div>
+          <div class="time-unit">
+            <div class="time-number" id="hours">0</div>
+            <div class="time-label">Horas</div>
+          </div>
+          <div class="time-unit">
+            <div class="time-number" id="minutes">0</div>
+            <div class="time-label">Minutos</div>
+          </div>
+          <div class="time-unit">
+            <div class="time-number" id="seconds">0</div>
+            <div class="time-label">Segundos</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>Feito com ❤️ para você</p>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Configuração do carrossel
+        const carousel = document.querySelector(".carousel");
+        const images = document.querySelectorAll(".carousel img");
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+        const indicatorsContainer = document.querySelector(
+          ".carousel-indicators"
+        );
+
+        let currentIndex = 0;
+        const totalImages = images.length;
+
+        // Criar indicadores
+        for (let i = 0; i < totalImages; i++) {
+          const indicator = document.createElement("div");
+          indicator.classList.add("indicator");
+          if (i === 0) indicator.classList.add("active");
+          indicator.addEventListener("click", () => goToImage(i));
+          indicatorsContainer.appendChild(indicator);
+        }
+
+        const indicators = document.querySelectorAll(".indicator");
+
+        // Atualizar carrossel
+        function updateCarousel() {
+          carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+          // Atualizar indicadores
+          indicators.forEach((indicator, index) => {
+            if (index === currentIndex) {
+              indicator.classList.add("active");
+              createHearts(); // Criar corações ao mudar de imagem
+            } else {
+              indicator.classList.remove("active");
+            }
+          });
+        }
+
+        // Navegação
+        function goToImage(index) {
+          currentIndex = index;
+          updateCarousel();
+        }
+
+        function nextImage() {
+          currentIndex = (currentIndex + 1) % totalImages;
+          updateCarousel();
+        }
+
+        function prevImage() {
+          currentIndex = (currentIndex - 1 + totalImages) % totalImages;
+          updateCarousel();
+        }
+
+        // Event listeners
+        nextBtn.addEventListener("click", nextImage);
+        prevBtn.addEventListener("click", prevImage);
+
+        // Autoplay (opcional)
+        let autoplay = setInterval(nextImage, 5000);
+
+        carousel.addEventListener("mouseenter", () => {
+          clearInterval(autoplay);
+        });
+
+        carousel.addEventListener("mouseleave", () => {
+          autoplay = setInterval(nextImage, 5000);
+        });
+
+        // Touch events para mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        carousel.addEventListener("touchstart", (e) => {
+          touchStartX = e.changedTouches[0].screenX;
+        });
+
+        carousel.addEventListener("touchend", (e) => {
+          touchEndX = e.changedTouches[0].screenX;
+          handleSwipe();
+        });
+
+        function handleSwipe() {
+          if (touchEndX < touchStartX - 50) {
+            nextImage();
+          }
+          if (touchEndX > touchStartX + 50) {
+            prevImage();
+          }
+        }
+
+        // Efeito de corações
+        function createHearts() {
+          // Limpar corações existentes
+          const existingHearts = document.querySelectorAll(".heart");
+          existingHearts.forEach((heart) => heart.remove());
+
+          // Criar novos corações
+          for (let i = 0; i < 20; i++) {
+            setTimeout(() => {
+              const heart = document.createElement("div");
+              heart.classList.add("heart");
+              heart.innerHTML = "❤️";
+              heart.style.left = `${Math.random() * 100}vw`;
+              heart.style.top = `${Math.random() * 100}vh`;
+              heart.style.fontSize = `${Math.random() * 20 + 10}px`;
+              heart.style.animationDuration = `${Math.random() * 3 + 2}s`;
+              document.body.appendChild(heart);
+
+              // Tornar visível
+              setTimeout(() => {
+                heart.style.opacity = "1";
+              }, 10);
+
+              // Remover após animação
+              setTimeout(() => {
+                heart.remove();
+              }, 5000);
+            }, i * 200);
+          }
+        }
+
+        // Animação CSS para os corações
+        const style = document.createElement("style");
+        style.innerHTML = `
+                @keyframes float {
+                    0% {
+                        transform: translateY(0) rotate(0deg);
+                        opacity: 1;
+                    }
+                    100% {
+                        transform: translateY(-100vh) rotate(360deg);
+                        opacity: 0;
+                    }
+                }
+                .heart {
+                    animation: float linear forwards;
+                    position: absolute;
+                }
+            `;
+        document.head.appendChild(style);
+
+        // Criar corações iniciais
+        createHearts();
+
+        // Contador de tempo juntos
+        // Contador de tempo juntos - VERSÃO CORRIGIDA
+        function updateTimeTogether() {
+          // Data do pedido de namoro: 19/06/2020 às 19:15
+          const startDate = new Date(2020, 5, 19, 19, 15, 0); // Mês é 0-indexed (5 = junho)
+          const now = new Date();
+
+          // Calculando a diferença completa
+          let years = now.getFullYear() - startDate.getFullYear();
+          let months = now.getMonth() - startDate.getMonth();
+          let days = now.getDate() - startDate.getDate();
+          let hours = now.getHours() - startDate.getHours();
+          let minutes = now.getMinutes() - startDate.getMinutes();
+          let seconds = now.getSeconds() - startDate.getSeconds();
+
+          // Ajustes para valores negativos
+          if (seconds < 0) {
+            seconds += 60;
+            minutes--;
+          }
+          if (minutes < 0) {
+            minutes += 60;
+            hours--;
+          }
+          if (hours < 0) {
+            hours += 24;
+            days--;
+          }
+          if (days < 0) {
+            // Obter o último dia do mês anterior
+            const lastDayOfMonth = new Date(
+              now.getFullYear(),
+              now.getMonth(),
+              0
+            ).getDate();
+            days += lastDayOfMonth;
+            months--;
+          }
+          if (months < 0) {
+            months += 12;
+            years--;
+          }
+
+          // Atualizando o DOM
+          document.getElementById("years").textContent = years;
+          document.getElementById("months").textContent = months;
+          document.getElementById("days").textContent = days;
+          document.getElementById("hours").textContent = hours;
+          document.getElementById("minutes").textContent = minutes;
+          document.getElementById("seconds").textContent = seconds;
+        }
+
+        // Atualizar a cada segundo
+        updateTimeTogether();
+        setInterval(updateTimeTogether, 1000);
+      });
+    </script>
+  </body>
+</html>
